@@ -1,0 +1,274 @@
+
+
+
+
+create table department(
+    dept_id number,
+    dept_name varchar2(20),
+    constraint department_pk primary key (dept_id)
+);
+
+insert into department values(11,'sales');
+insert into department values(12,'hr');
+insert into department values(13,'development');
+insert into department values(14,'finance');
+
+create table emp_role (
+  role_id number ,
+  dept_id number,
+  emp_role varchar2(20),
+  constraint emp_role_pk primary key (role_id),
+  constraint dept_role_fk foreign key (dept_id) references department (dept_id)  
+);
+insert into emp_role values(21,11,'sales analyst');
+insert into emp_role values(22,11,'sales Manager');
+insert into emp_role values(23,11,'sales representative');
+insert into emp_role values(31,12,'Hr manager');
+insert into emp_role values(32,12,'Hr adimin');
+insert into emp_role values(41,13,'resarch analyst');
+insert into emp_role values(42,13,'design');
+insert into emp_role values(43,13,'front end ');
+insert into emp_role values(44,13,'backend');
+insert into emp_role values(45,13,'testing');
+
+
+create table project(
+    project_id number,
+    project_name varchar2(20),
+    dept_id number,
+    constraint project_pk primary key (project_id),
+    constraint fk_project_dept foreign key (dept_id) references department (dept_id) 
+);
+
+insert into project values(1001,'projectx',12);
+insert into project values(1002,'projecty',13);
+insert into project values(1003,'projectin',14);
+
+insert into project values(1004,'projecty',11);
+insert into project values(1005,'projecty',12);
+insert into project values(1006,'projecty',13);
+insert into project values(1007,'projectx',14);
+insert into project values(1008,'projectx',11);
+insert into project values(1009,'projectx',11);
+insert into project values(1010,'projecty',13);
+
+insert into project values(1011,'projectin',14);
+
+insert into project values(1012,'projectin',13);
+insert into project values(1013,'projectin',14);
+insert into project values(1014,'projectin',11);
+insert into project values(1015,'projectx',14);
+
+
+
+create table work_location(
+    loc_id number,
+    W_location varchar2(20),
+    city varchar2(20),
+    loc_state varchar2(20),
+    constraint pk_loc primary key (loc_id)
+);
+
+insert into work_location values(101,'north','chennai','tamilnadu');
+insert into work_location values(102,'south','madurai','tamilnadu');
+insert into work_location values(103,'west','coimbatore','tamilnadu');
+insert into work_location values(104,'east','trichy','tamilnadu');
+
+create table Employee(
+    emp_id number(6),
+    name varchar2(20),
+    hire_date date,
+    mob_no number(10),
+    mail varchar2(30),
+    emp_sts varchar2(20),
+    address varchar2(30),
+    res_city varchar2(20),
+    loc_id number,
+    role_id number,
+    constraint employee_pk primary key (emp_id),
+    constraint fk_emp_loc foreign key (loc_id) references work_location(loc_id),
+    constraint fk_emp_role foreign key (role_id) references emp_role (role_id)
+);
+
+insert into Employee values (2001,'ram',to_date('14-04-16', 'dd-mm-yyyy'),8338473582,'ram@gamil.com','active',null,'kanyakumari',102,41);
+insert into Employee values (2002,'siva',to_date('03-11-17', 'dd-mm-yyyy'),9335477522,'siva@gamil.com','active',null,'kanyakumari',102,42);
+insert into Employee values (2003,'pragathi',to_date('01-02-20', 'dd-mm-yyyy'),9328573282,'pragathi@gamil.com','active',null,'coimbatore',103,43);
+insert into Employee values (2004,'shilpa',to_date('15-09-18', 'dd-mm-yyyy'),7318375588,'shilpa@gamil.com','active',null,'chennai',101,44);
+insert into Employee values (2005,'robin',to_date('16-05-19', 'dd-mm-yyyy'),6328463780,'robin@gamil.com','active',null,'dindigul',102,45);
+insert into Employee values (2006,'rita',to_date('02-02-16', 'dd-mm-yyyy'),8238476500,'rita@gamil.com','active',null,'trichy',104,31);
+insert into Employee values (2007,'sam',to_date('11-07-18', 'dd-mm-yyyy'),8008463880,'sam@gamil.com','active',null,'coimbatore',103,22);
+insert into Employee values (2008,'ajith',to_date('20-04-20', 'dd-mm-yyyy'),8338113480,'ajith@gamil.com','active',null,'theni',102,23);
+insert into Employee values (2009,'arun',to_date('12-03-19', 'dd-mm-yyyy'),9630371502,'arun@gamil.com','active',null,'karur',103,21);
+insert into Employee values (2010,'anushka',to_date('11-05-16', 'dd-mm-yyyy'),9838078782,'anushka@gamil.com','active',null,'erode',101,32);
+insert into Employee values (2011,'preethi',to_date('14-04-16', 'dd-mm-yyyy'),8310073587,'preethi@gamil.com','active',null,'chennai',101,45);
+insert into Employee values (2012,'praveen',to_date('09-06-17', 'dd-mm-yyyy'),8908433513,'praveen@gamil.com','active',null,'erode',103,44);
+insert into Employee values (2013,'rana',to_date('05-09-15', 'dd-mm-yyyy'),6708403584,'rana@gamil.com','active',null,'sivakasi',102,43);
+insert into Employee values (2014,'varun',to_date('02-06-19', 'dd-mm-yyyy'),9008473555,'varun@gamil.com','active',null,'ooty',103,42);
+insert into Employee values (2015,'shobin',to_date('11-03-19', 'dd-mm-yyyy'),9118473041,'shobin@gamil.com','active',null,'chennai',101,21);
+insert into Employee values (2016,'agash',to_date('04-04-18', 'dd-mm-yyyy'),7035060580,'agash@gamil.com','active',null,'coimbatore',103,32);
+insert into Employee values (2017,'vinoth',to_date('02-07-17', 'dd-mm-yyyy'),8008420510,'vinoth@gamil.com','inactive',null,'madurai',102,41);
+
+create table account_det (
+    account_id number,
+    bank_name varchar2(20),
+    acc_no number,
+    emp_id number,
+    constraint pk_acc_det primary key (account_id),
+    constraint fk_acc_emp foreign key (emp_id) references Employee(emp_id)
+);
+
+insert into account_det values(5001,'canara bank',35463828,2001);
+insert into account_det values(5002,'axis bank',53848033,2002);
+insert into account_det values(5003,'axis bank',32094750,2003);
+insert into account_det values(5004,'indian bank',10038467,2004);
+insert into account_det values(5005,'canara bank',09349345,2005);
+insert into account_det values(5006,'city bank',33930431,2006);
+insert into account_det values(5007,'city bank',38903745,2007);
+insert into account_det values(5008,'canara bank',90374751,2008);
+insert into account_det values(5009,'city bank',35456993,2009);
+insert into account_det values(5010,'indian bank',77834933,2010);
+insert into account_det values(5011,'canara bank',49027354,2011);
+insert into account_det values(5012,'sbi bank',20946732,2012);
+insert into account_det values(5013,'axis bank',90834571,2013);
+insert into account_det values(5014,'canara bank',40373124,2014);
+insert into account_det values(5015,'sbi bank',78934932,2015);
+insert into account_det values(5016,'indian bank',57939483,2016);
+insert into account_det values(5017,'icici bank',46538491,2017);
+
+create table education(
+    edu_id number,
+    emp_id number,
+    graduation varchar2(20),
+    certification varchar2(100),
+    constraint education_pk primary key (edu_id) ,
+    constraint fk_edu_emp foreign key (emp_id) references Employee(emp_id)    
+);
+
+insert into education values(3001,2001,'BE','python');
+insert into education values(3002,2002,'BE','c+,javascript');
+insert into education values(3003,2003,'BE',null);
+insert into education values(3004,2004,'BE','java');
+insert into education values(3005,2005,'BE',null);
+insert into education values(3006,2006,'BCA','python');
+insert into education values(3007,2007,'BE','java,testing');
+insert into education values(3008,2008,'MCA',null);
+insert into education values(3009,2009,'BE','python');
+insert into education values(3010,2010,'ME',null);
+insert into education values(3011,2011,'ME','c+,aws');
+insert into education values(3012,2012,'MCA','java,.net');
+insert into education values(3013,2013,'Bsc','java,c+');
+insert into education values(3014,2014,'MCA',null);
+insert into education values(3015,2015,'ME','python');
+insert into education values(3016,2016,'BE',null);
+insert into education values(3017,2017,'ME','python,java');
+
+
+
+create table leave(
+    leave_id number,
+    emp_id number,
+    req_date date,
+    reason varchar2(100),
+    type varchar2(30),
+    lev_frm date,
+    lev_to date,
+    total_day number,
+    lev_sts varchar2(20),  ---pendinng,approved,denied
+    approver varchar2(20),
+    constraint leave_pk primary key (leave_id),
+    constraint fk_leave_emp foreign key (emp_id) references Employee(emp_id)
+);
+
+insert into leave values(501,2007,to_date('03-04-2022','dd-mm-yyyy'),'personal','full day',to_date('09-04-2022','dd-mm-yyyy'),to_date('11-04-2022','dd-mm-yyyy'),3,'approved','hr');
+insert into leave values(502,2011,to_date('18-12-2022','dd-mm-yyyy'),'personal','full day',to_date('26-12-2022','dd-mm-yyyy'),to_date('27-12-2022','dd-mm-yyyy'),2,'approved','hr');
+insert into leave values(503,2012,to_date('06-05-2022','dd-mm-yyyy'),'personal','full day',to_date('12-05-2022','dd-mm-yyyy'),to_date('12-05-2022','dd-mm-yyyy'),1,'approved','hr');
+insert into leave values(504,2016,to_date('12-05-2022','dd-mm-yyyy'),'personal','full day',to_date('18-05-2022','dd-mm-yyyy'),to_date('20-05-2022','dd-mm-yyyy'),3,'approved','hr');
+insert into leave values(505,2003,to_date('15-07-2022','dd-mm-yyyy'),'personal','full day',to_date('20-07-2022','dd-mm-yyyy'),to_date('20-07-2022','dd-mm-yyyy'),1,'approved','hr');
+insert into leave values(506,2008,to_date('22-03-2022','dd-mm-yyyy'),'personal','full day',to_date('23-03-2022','dd-mm-yyyy'),to_date('24-03-2022','dd-mm-yyyy'),2,'approved','hr');
+insert into leave values(507,2009,to_date('21-10-2022','dd-mm-yyyy'),'personal','full day',to_date('23-10-2022','dd-mm-yyyy'),to_date('23-10-2022','dd-mm-yyyy'),1,'approved','hr');
+insert into leave values(508,2001,to_date('15-08-2022','dd-mm-yyyy'),'personal','full day',to_date('17-08-2022','dd-mm-yyyy'),to_date('18-08-2022','dd-mm-yyyy'),2,'approved','hr');
+insert into leave values(509,2003,to_date('14-07-2022','dd-mm-yyyy'),'personal','full day',to_date('16-07-2022','dd-mm-yyyy'),to_date('16-07-2022','dd-mm-yyyy'),1,'approved','hr');
+insert into leave values(510,2002,to_date('09-09-2022','dd-mm-yyyy'),'personal','full day',to_date('11-09-2022','dd-mm-yyyy'),to_date('11-09-2022','dd-mm-yyyy'),1,'approved','hr');
+insert into leave values(511,2006,to_date('11-05-2022','dd-mm-yyyy'),'personal','full day',to_date('13-05-2022','dd-mm-yyyy'),to_date('14-05-2022','dd-mm-yyyy'),2,'approved','hr');
+insert into leave values(512,2007,to_date('21-01-2022','dd-mm-yyyy'),'personal','full day',to_date('23-01-2023','dd-mm-yyyy'),to_date('24-01-2023','dd-mm-yyyy'),2,'approved','hr');
+insert into leave values(513,2012,to_date('11-01-2023','dd-mm-yyyy'),'personal','full day',to_date('13-01-2023','dd-mm-yyyy'),to_date('14-01-2023','dd-mm-yyyy'),2,'approved','hr');
+insert into leave values(514,2015,to_date('11-01-2023','dd-mm-yyyy'),'personal','half day',to_date('12-01-2023','dd-mm-yyyy'),to_date('12-01-2023','dd-mm-yyyy'),0.5,'approved','hr');
+insert into leave values (515,2015,to_date('03-02-2023','dd-mm-yyyy'),'personal','full day',to_date('05-02-2023','dd-mm-yyyy'),to_date('05-02-2023','dd-mm-yyyy'),1,'approved','hr');
+
+create table permission (
+permission_id  int,
+emp_id int,
+hours int,
+on_date date,
+constraint pk_permission primary key (permission_id),
+constraint fk_permission foreign key (emp_id) references Employee (emp_id)
+);
+
+
+
+
+create table salary (
+    salary_id number,
+    emp_id number,
+    CTC_sal number,
+    tax_per number,
+    sal_period varchar2(20),
+    sal_mode varchar2(20),
+    constraint salary_pk primary key (salary_id),
+    constraint fk_salary_role foreign key (emp_id) references Employee (emp_id)
+);
+
+insert into salary values (601,2001,250000,10,'monthly','Bank transfer');
+insert into salary values (602,2002,200000,10,'monthly','Bank transfer');
+insert into salary values (603,2003,170000,10,'monthly','Bank transfer');
+insert into salary values (604,2004,250000,10,'monthly','Bank transfer');
+insert into salary values (605,2005,250000,10,'monthly','Bank transfer');
+insert into salary values (606,2006,250000,10,'monthly','Bank transfer');
+insert into salary values (607,2007,350000,10,'monthly','Bank transfer');
+insert into salary values (608,2008,200000,10,'monthly','Bank transfer');
+insert into salary values (609,2009,200000,10,'monthly','Bank transfer');
+insert into salary values (610,2010,200000,10,'monthly','Bank transfer');
+insert into salary values (611,2011,200000,10,'monthly','Bank transfer');
+insert into salary values (612,2012,200000,10,'monthly','Bank transfer');
+insert into salary values (613,2013,200000,10,'monthly','Bank transfer');
+insert into salary values (614,2014,200000,10,'monthly','Bank transfer');
+insert into salary values (615,2015,250000,10,'monthly','Bank transfer');
+insert into salary values (616,2016,200000,10,'monthly','Bank transfer');
+insert into salary values (617,2017,200000,10,'monthly','Bank transfer');
+
+
+
+create table former_emp (
+    former_id number,
+    emp_id number,
+    relived_date date,
+    transfered_to varchar2(50),
+    constraint pk_former_emp primary key (former_id),
+    constraint fk_former_emp foreign key (emp_id ) references Employee (emp_id) 
+
+
+
+with total_working_day as( 
+select  e.emp_id,d.working_day  from Employee e,
+ (
+select count(c_date) working_day from(
+select rownum rnum, (rownum+trunc(sysdate,'mon')-1) c_date
+from all_objects  where (rownum <= (last_day(trunc(sysdate)) - trunc(sysdate,'mon')+1)))
+where to_char(c_date,'dy') not in ('sat','sun')) d)
+select e.emp_id,e.name,r.emp_role,d.dept_name,loc.W_location,w.working_day,s.CTC_sal,
+trunc(s.CTC_sal/12)mon_sal,(trunc(s.CTC_sal/12))*(s.tax_per/100) tax_amt,
+(trunc(s.CTC_sal/12)/w.working_day) per_day_sal,((trunc(s.CTC_sal/12)/w.working_day)/8) hourly_sal,
+sum(l.total_day) total_leaves,(sum(total_day) *(trunc(s.CTC_sal/12)/w.working_day)) L_O_P,
+((trunc(s.CTC_sal/12)/w.working_day)*(w.working_day)-(trunc(s.CTC_sal/12))*(s.tax_per/100)-nvl((sum(total_day) *(trunc(s.CTC_sal/12)/w.working_day)),1)) net_sal
+ from  Employee e
+inner join total_working_day w
+on e.emp_id= w.emp_id
+left join salary s on e.emp_id=s.emp_id
+left join emp_role r on r.role_id=e.role_id
+left join department d on r.dept_id=d.dept_id
+left join work_location loc on e.loc_id= loc.loc_id
+left join leave l  on e.emp_id=l.emp_id and l.lev_frm  between  trunc(sysdate,'mon') and last_day(sysdate)
+where e.emp_sts='active'
+group by e.emp_id,e.name,w.working_day,s.CTC_sal,s.tax_per,r.emp_role,d.dept_name,loc.W_location;
+    
+);
